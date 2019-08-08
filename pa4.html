@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Simplified Amazon Dynamo Style Key-value Storage | Anunay Rao</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Anunay Rao</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">Work</a></li>
+							
+							<li><a href="generic2.html">About Me</a></li>
+							
+						</ul>
+						<ul class="icons">
+							<!--
+							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>-->
+							<li><a href="https://www.linkedin.com/in/anunayrao/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/anunayrao" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<h3>Simplified Amazon Dynamo Style <br /> Key-Value Storage
+								</h3>
+								</header>
+
+								<!-- Text stuff -->
+                                    <h2>Introduction</h2>
+                                    <!--
+									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
+									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
+									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>.
+                                    Finally, this is a <a href="#">link</a>.</p>-->
+                                    <p>This is a Dynamo style key-value storage which provides both availability and linearizability at the same time viz., the system should always perform read and write operations successfully even under failures. Further, the read opearation should always return the most recent value. To accomplish this, we need to implement partitioning, replication and failure handling. In order to implement dynamo style replicated key-value storage we  have used 5 AVD instances (nodes) which will acts as both server and client and their Content Provider is used to implement all the storage functionalities. Quorum approach is used to implement linearizability. The key-values are stored as files with key as file names and value as the contents of the file. For this implementation the system assumes that there can be atmost 1 node failure at any given time and the system is requred to support insert, query, delete, query all keys in the dynamo ring, and query keys stored in a particular AVD.
+                                        The failure is emulated by force closing the instance an app instance rather than by killing an entire emulator instance.
+                                    <br />
+                                    </p>
+                                    
+                                    <h2>Design of Content Provider</h2>
+                                    <p >
+                                    <div class="col-6 col-12-small">
+                                            <ol>
+                                                <li style="text-align:justify;"><b>Membership: </b>Every node can know every other node. This means that each node knows all the other nodes in the system and also which partition in the dynamo ring belongs to which node. Any node can forward a request to the correct node directly.</li>
+                                                <li style="text-align:justify;"><b>Request Routing: </b>Each Dynamo node knows all other nodes in the system and also knows exactly which partition belongs to which node. Therefore, under no failure, a request for a key is directly forwarded to the coordinator (successor of the key) and the coordinator should be incharge of serving read/write operations.</li>
+                                                <li style="text-align:justify;"><b>Quorum Replication: </b>It is used to provide linearizability. The replication degree N is taken to be 3 which means that given a key, the key's coordinator as well as the 2 successor nodes in the Dynamo ring should store the key. The reader quorum size R and the writer quorum size W is taken as 2 to establish N &gt R + W. When the coordinator receives a get/put request it should always contact other two nodes (successor) and get an acknowledgement for write and a value for read. For write operations, all the objects are versioned in order to distinguish stale copies from the most recent copy. For the read operation, if reader quorum has different versions of the same object, the coordinator should return the most recent version.</li>
+                                                <li style="text-align:justify;"><b>Failure Handling: </b>Socket Timeout is used to detect a node failure. When a coordinator for a request fails its successor can be contacted next for the request. When a failed node recovers it should copy all the writes missed during the failure. For this purpose it should query its two predecessor and two successor for their keys as it is required to store the keys of its two predecessor and its own keys which were stored in its two successor when it was down.  </li>
+                                            </ol>
+                                            </div>
+                                        </p> 
+                                    <h2>Test Phases</h2>
+                                    <p>
+                                        <div class="col-6 col-12-small">
+                                        <ol>
+                                            <li style="text-align:justify;"><b>Phase 1 - Testing basic operations:</b> This phase tests all the  basic operations, i.e., insert, query, delete, @ (query all keys stored in a particular AVD) and * (query all the keys stored in the system). There is no concurrency in operations and there is no failure either.<b style="color:#00cc00;"> ... passed</b> </li>
+                                            <li style="text-align:justify;"><b>Phase 2 - Testing concurrent operations with diffrent keys:</b> This phase tests if system can handle concurrent operations without any failure. The tester uses independent (key,values) pairs inserted/queried concurrently on all the nodes.<mark ><b style="color:#00cc00;">... passed</b></mark></li>
+                                            <li style="text-align:justify;"><b>Phase 3 - Testing concurrent operations with same keys:</b> This phase tests if system can handle concurrent operations with same keys without any failure. The tester uses same set of (key,values) pairs inserted/queried concurrently on all the nodes.<mark ><b style="color:#00cc00;">... passed</b></mark></li>
+                                            <li style="text-align:justify;"><b>Phase 4 - Testing one failure:</b> This phase tests one failure with every operation. One node will crash before operation start. After all the operations are done, the node iwll recover. This is repeated for each and every operation.<mark ><b style="color:#00cc00;">... passed</b></mark></li>
+                                            <li style="text-align:justify;"><b>Phase 5 - Testing concurrent operations with one failure:</b> This phase executes operations concurrently and crash one node in the middle of the execution. After some time, the failed node will also recover in the middle of the execution.<mark ><b style="color:#00cc00;">... passed</b></mark></li>
+                                            <li style="text-align:justify;"><b>Phase 6 - Testing concurrent operations with one consistent failure:</b> This phase crashes one node at a time consistently, i.e., one node will crash then recover, and another node will crash and recover, etc. There will be a brief period of time in between the crash-recover sequence.<mark ><b style="color:#00cc00;">... passed</b></mark></li>
+
+
+                                        </ol>
+                                        </div>
+                                    </p>
+                                    
+                                    
+                                    
+                                    <h2>Assumptions</h2>
+                                    <p>
+                                            <div class="col-6 col-12-small">
+                                                    <ol>
+                                                        <li>The system does not implement virtual nodes i.e., the partions in the dynamo ring are static and fixed.</li>
+                                                        <li>The system does not implement hinted handoff which it is OK to replicate on only two nodes under failure.</li>
+                                                    </ol>
+
+                                    </p>
+                                    <br/>
+                                    <ul class="actions special">
+                                                                                
+                                            <li><a href="index.html#pa4"   class="button scrolly">Go Back</a></li>
+                                            <li><a href="https://github.com/anunayrao/Simplified-Amazon-Dynamo"   class="button scrolly">VIEW CODE</a></li>
+                                    </ul>	
+							</section>
+                                </div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<!--
+						<section>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="text" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="3"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+						</section>
+						-->
+						<section class="split contact">
+                                <section class="alt">
+                                    <h3>Address</h3>
+                                    <p>102 Englewood Avenue<br />
+                                    Buffalo, NY 14214-1261</p>
+                                </section>
+                                <section>
+                                    <h3>Phone</h3>
+                                    <p><a href="#">(716) 536-0335</a></p>
+                                </section>
+                                <section>
+                                    <h3>Email</h3>
+                                    <p><a href="mailto:anunayra@buffalo.edu">anunayra@buffalo.edu</a></p>
+                                </section>
+                                <section>
+                                    <h3>Social</h3>
+                                    <ul class="icons alt">
+                                        <!--
+                                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>-->
+                                <li><a href="https://www.linkedin.com/in/anunayrao/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                                <li><a href="https://github.com/anunayrao" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+                                    </ul>
+                                </section>
+                            </section>
+                        </footer>
+    
+                    <!-- Copyright -->
+                    <!--  
+                    <div id="copyright">
+                            <ul><li>&copy; Anunay Rao</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+                        </div>
+                    -->
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

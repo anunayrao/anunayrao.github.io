@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Multi-Scale Template Matching | Anunay Rao</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Anunay Rao</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">Work</a></li>
+							<li><a href="generic.html">Generic Page</a></li>
+							<li><a href="generic2.html">About Me</a></li>
+							
+						</ul>
+						<ul class="icons">
+							<!--
+							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>-->
+							<li><a href="https://www.linkedin.com/in/anunayrao/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/anunayrao" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<h3>Multi-Scale Template Matching<br />
+									</h3>
+								</header>
+								
+								<!-- Text stuff -->
+							
+							<!--
+									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
+									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
+									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>.
+									Finally, this is a <a href="#">link</a>.</p>-->
+								
+									<h2>Introduction</h2>
+									<p> It is the implementation of template matching algorithm which is invariant of the size of the template. Here, we will detect cursor on an image. The three cursor template are shown below:
+                                            <div style="text-align:center;"><img src="images/setA.png" class="image"  > &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <img src="images/t2.png" class="image"  > &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <img src="images/t3.png" class="image"  > </div>
+                                    </p>
+                                    <hr />
+                                    <h2>Different Methods</h2>
+                                    <div class="col-6 col-12-small">
+
+											
+											<ol>
+                                                    <b><li>Conventional Template Matching: Implemented in python:</li></b>
+                                                    <p>- Template is kept over each pixel to compute correlation.<br/>- Template should be exactly of the same size of the image patch for this method to
+                                                        perform  well. <br/>- Time consuming due to huge number of computations.</p>
+                                                <b><li>Template matching with Canny edge detector:</li></b>
+                                                <p>- Image and Template are subjected to canny edge detector (using cv2.canny()) and then using cv2.TM_CCOEFF template matching method yields good results.<br/>- Template need not to be of the same size of the image patch. Muti-scaling template matching is supported.</p>
+                                                <b><li>Template matching with Gaussian Blur and Laplacian transformation:</li></b>
+                                                <p>- Image is subjected to Gaussian blur to reduce noise. Then Laplacian transformation is applied over image and template.<br/>- Template matching is performed for different scale of template with image by using cv2.TM_CCOEFF matching method. <br/>- Value returned by matching method is compared with threshold. If the value returned is greater than threshold then the cursor is detected and is shown by the bounded rectangle.<br/>- This method yields best results. I have implemented cursor detection using this method.</p>
+												
+											</ol>
+                                    </div>
+                                    <hr/>
+                                    <h2>Results</h2>
+                                            <p>Detected cursor is shown inside bounded blue box on an image.</p>
+                                            <img src="images/pos_3.jpg" class="imagecen2"  >
+                                            <hr/>
+                                         
+                                          
+                                           <img src="images/t2_1.jpg "class="imagecen2"  >
+                                           
+                                       
+                                            <hr/>
+                                            <img src="images/t3_4.jpg" class="imagecen2"  >
+                                            
+                                            <br/>
+                                            <b>To check out all the results &nbsp;<a href="https://github.com/anunayrao/Multi-Scale-Template-Matching">Click Here</a></b>
+                                            <br/>
+                                            <br/>
+
+                                        
+									
+									
+									
+									
+									
+									
+									
+
+
+									
+									<ul class="actions special">
+											
+											<li><a href="index.html#hough"   class="button scrolly">Go Back</a></li>
+											<li><a href="https://github.com/anunayrao/Multi-Scale-Template-Matching"   class="button scrolly">VIEW CODE</a></li>
+									</ul>
+
+									<hr />
+
+					
+					<!--<iframe src="/files/proj1.1.pdf" width="100%" height="1000px"></iframe>-->
+					</div>
+
+				<!-- Footer -->
+					
+				<footer id="footer">
+					<!--
+					<section>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="text" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="3"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+						</section> -->	
+						<section class="split contact">
+                                <section class="alt">
+                                    <h3>Address</h3>
+                                    <p>102 Englewood Avenue<br />
+                                    Buffalo, NY 14214-1261</p>
+                                </section>
+                                <section>
+                                    <h3>Phone</h3>
+                                    <p><a href="#">(716) 536-0335</a></p>
+                                </section>
+                                <section>
+                                    <h3>Email</h3>
+                                    <p><a href="mailto:anunayra@buffalo.edu">anunayra@buffalo.edu</a></p>
+                                </section>
+                                <section>
+                                    <h3>Social</h3>
+                                    <ul class="icons alt">
+                                        <!--
+                                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>-->
+                                <li><a href="https://www.linkedin.com/in/anunayrao/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                                <li><a href="https://github.com/anunayrao" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+                                    </ul>
+                                </section>
+                            </section>
+                        </footer>
+    
+                    <!-- Copyright -->
+                    <!--  
+                    <div id="copyright">
+                            <ul><li>&copy; Anunay Rao</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+                        </div>
+                    -->
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

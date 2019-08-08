@@ -1,0 +1,489 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Relational Query Engine | Anunay Rao</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Anunay Rao</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">Work</a></li>
+							
+							<li><a href="generic2.html">About Me</a></li>
+							
+						</ul>
+						<ul class="icons">
+							<!--
+							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>-->
+							<li><a href="https://www.linkedin.com/in/anunayrao/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/anunayrao" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<h3>Relational Query Engine
+								</h3>
+								</header>
+
+								<!-- Text stuff -->
+                                    <h2>Introduction</h2>
+                                    <!--
+									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
+									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
+									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>.
+                                    Finally, this is a <a href="#">link</a>.</p>-->
+                                    <p>This is a simple SQL query evaluator implemented in JAVA using JSQLParser for parsing the SQL queries and EvalLib for evaluating the expressions in the SQL queries. It is also optimised to work within memory constraints. The source data for the queries is in CSV files where each line corresponds to one row of data and each record is separated by a vertical pipe ‘|’ character.  The <strong>CREATE TABLE</strong> statement is used only to define relation’s schema and the data corresponding to this table is stored in a file named &lt;tablename&gt;.csv on the disk. 
+                                    <br />
+                                    <b>Example of CREATE TABLE statement and Source Data:</b>
+                                    <pre><code>CREATE TABLE A(X int, Y int, Z date);</code></pre> 
+                                    This implies that data is stored in file named A.csv and its content looks like: 
+                                    <pre><code>10|27|2011-03-27
+18|24|2014-10-24                    
+20|15|2019-07-28
+                                    </code></pre>
+                                    </p>
+                                    
+                                    <h2>Functionalities</h2>
+                                    <p>
+                                            The query engine supports the following functionalities:
+                                            <div class="col-6 col-12-small">
+                                            <ul>
+                                                <li>Insert</li>
+                                                <li>Delete</li>
+                                                <li>Select</li>
+                                                <li>Nested-Select</li>
+                                                <li>Project</li>
+                                                <li>Join</li>
+                                                <li>Bag Union</li>
+                                                <li>Aggregate Functions (COUNT, MIN, MAX, AVG, SUM)</li>
+                                                <li>GROUP BY</li>
+                                                <li>GROUP BY Aggregates</li>
+                                                <li>ORDER BY</li>
+                                                <li>LIMIT</li>
+                                            </ul>
+                                            </div>
+                                    </p>
+                                    
+                                    <h2>Implementation Techniques</h2>
+                                    <p>
+                                        <div class="col-6 col-12-small">
+                                        <ul>
+                                            <li style="font-size:18px"><b>Join:</b> It is implemented using <b>Hybid Hash Join</b> Algorithm.</li>
+                                            <li style="font-size:18px"><b>Order By:</b> For in-memory implementation that is when whole data can reside in memory it is implemented by Java's Collections.sort() method but when data is large and the whole data cannot reside in memory, External Sort, viz., sort on disk is used.</li>
+                                        </ul>
+                                        </div>
+                                    </p>
+                                    <h2>Efficiency</h2>
+                                    <p>In order to improve the efficiency of the query engine following techniques are implemented:</p>
+                                    <div class="col-6 col-12-small">
+                                        <ul>
+                                            <li>Selection Pushdown</li>
+                                            <li>Indexing<sup><b>*</b></sup></li>
+                                        </ul>
+                                        </div>
+                                    <h2>Performance of Query Engine</h2>
+                                    <div class="col-6 col-12-small">
+                                            <ul>
+                                                <li><b>Basic Queries</b></li>
+                                             <pre><code>$> CREATE TABLE BEIGE(LACE int, SOLVE int, PERMANENT string, NAG decimal);
+
+$> SELECT BEIGE.LACE, BEIGE.PERMANENT, BEIGE.SOLVE, BEIGE.NAG FROM BEIGE;
+<b>... took 0.025933215 seconds</b>
+
+$> SELECT BEIGE.LACE, BEIGE.PERMANENT FROM BEIGE;
+<b>... took 0.009938593 seconds</b>
+
+$> SELECT BEIGE.NAG + BEIGE.NAG AS OUTPUT_1, BEIGE.SOLVE + BEIGE.NAG + BEIGE.SOLVE + BEIGE.LACE * BEIGE.NAG + BEIGE.SOLVE AS OUTPUT_2, BEIGE.NAG 
++ BEIGE.SOLVE + BEIGE.NAG AS OUTPUT_3 FROM BEIGE WHERE BEIGE.NAG < 5.066984425478237 AND BEIGE.PERMANENT = 'run dogged besides purple';
+<b>... took 0.010051404 seconds</b>
+
+$> SELECT BEIGE.LACE + BEIGE.NAG + BEIGE.NAG + BEIGE.SOLVE AS OUTPUT_1, BEIGE.LACE + BEIGE.NAG + BEIGE.LACE + BEIGE.SOLVE AS OUTPUT_2, 
+2.1122694783129226 + BEIGE.SOLVE + BEIGE.NAG + BEIGE.NAG AS OUTPUT_3, BEIGE.LACE + BEIGE.NAG * BEIGE.LACE + BEIGE.SOLVE + BEIGE.LACE AS OUTPUT_4 FROM BEIGE;
+<b>... took 0.025803686 seconds</b>
+
+$> SELECT BEIGE.SOLVE, BEIGE.LACE FROM BEIGE WHERE BEIGE.LACE <> 43 AND BEIGE.SOLVE > 45 AND BEIGE.SOLVE > 50;
+<b>... took 0.006737012 seconds</b>
+                                             </code></pre>   
+                                                <pre><code>$> CREATE TABLE BLANCHED(CHOCOLATE int, PLUM int, UNWIND string, INSTEADOF decimal);
+
+$> SELECT BLANCHED.PLUM, BLANCHED.UNWIND, BLANCHED.CHOCOLATE FROM BLANCHED WHERE BLANCHED.INSTEADOF <= 4.61483491132217;
+<b>... took 0.041360969 seconds</b>
+
+$> SELECT BLANCHED.PLUM, BLANCHED.INSTEADOF, BLANCHED.CHOCOLATE, BLANCHED.UNWIND FROM BLANCHED;
+<b>... took 0.049047762 seconds</b>
+
+$> SELECT BLANCHED.INSTEADOF, BLANCHED.UNWIND, BLANCHED.CHOCOLATE, BLANCHED.PLUM FROM BLANCHED WHERE BLANCHED.UNWIND = 'steel burnished tan' 
+AND BLANCHED.CHOCOLATE <> 44 AND BLANCHED.PLUM <> 46;
+<b>... took 0.009381359 seconds</b>
+
+$> SELECT BLANCHED.PLUM, BLANCHED.INSTEADOF FROM BLANCHED;
+<b>... took 0.011077018 seconds</b>
+
+$> SELECT BLANCHED.CHOCOLATE + BLANCHED.CHOCOLATE + BLANCHED.INSTEADOF AS OUTPUT_1, BLANCHED.PLUM + BLANCHED.PLUM + BLANCHED.INSTEADOF AS OUTPUT_2 FROM BLANCHED 
+WHERE BLANCHED.PLUM <= 47 AND BLANCHED.UNWIND = 'peach regularly engage';
+<b>... took 0.006137591 seconds</b>
+
+$> SELECT BLANCHED.CHOCOLATE + BLANCHED.INSTEADOF + BLANCHED.PLUM + 7.498820738270613 + 4.479660262006677 + BLANCHED.PLUM AS OUTPUT_1, 
+BLANCHED.CHOCOLATE + BLANCHED.CHOCOLATE + BLANCHED.PLUM + BLANCHED.CHOCOLATE + BLANCHED.CHOCOLATE + 1.4274832875746424 AS OUTPUT_2 
+FROM BLANCHED WHERE BLANCHED.UNWIND = 'wake cajole among' AND BLANCHED.UNWIND = 'quickly blush blanched tithes' AND BLANCHED.UNWIND = 'wheat quietly';
+<b>... took 0.007720231 seconds</b>
+
+$> SELECT 6.6446841030518 + 9.450172465908263 + BLANCHED.INSTEADOF + BLANCHED.CHOCOLATE AS OUTPUT_1, BLANCHED.CHOCOLATE + BLANCHED.PLUM + BLANCHED.CHOCOLATE AS OUTPUT_2 
+FROM BLANCHED WHERE BLANCHED.INSTEADOF <> 5.1120352198730945 AND BLANCHED.PLUM > 47;
+<b>... took 0.01515984 seconds</b>
+
+$> SELECT BLANCHED.CHOCOLATE + BLANCHED.CHOCOLATE + BLANCHED.INSTEADOF * BLANCHED.INSTEADOF + BLANCHED.PLUM + 4.7508124625203765 AS OUTPUT_1, 
+BLANCHED.INSTEADOF + BLANCHED.PLUM + BLANCHED.PLUM + BLANCHED.PLUM AS OUTPUT_2, BLANCHED.PLUM + BLANCHED.CHOCOLATE + BLANCHED.PLUM AS OUTPUT_3, 
+BLANCHED.CHOCOLATE + BLANCHED.PLUM + 9.843901994450404 + BLANCHED.CHOCOLATE + BLANCHED.CHOCOLATE AS OUTPUT_4 
+FROM BLANCHED WHERE BLANCHED.PLUM >= 41 AND BLANCHED.INSTEADOF <> 5.3397033229358435 AND BLANCHED.UNWIND = 'doggedly silently';
+<b>... took 0.008991207 seconds</b>
+                                                </code></pre>
+                                                <pre><code>$> CREATE TABLE LOSE(BOLDLY int, BESIDE int, ATOP string, GREY decimal);
+
+$> SELECT LOSE.GREY, LOSE.ATOP, LOSE.BESIDE, LOSE.BOLDLY FROM LOSE WHERE LOSE.ATOP = 'detect realms' 
+AND LOSE.BESIDE >= 41;
+<b>... took 0.144992789 seconds</b>
+
+$> SELECT LOSE.BOLDLY, LOSE.BESIDE FROM LOSE WHERE LOSE.BOLDLY < 47;
+<b>... took 0.032149556 seconds</b>
+
+$> SELECT LOSE.BESIDE, LOSE.GREY FROM LOSE;
+<b>... took 0.040376916 seconds</b>
+
+$> SELECT LOSE.BOLDLY, LOSE.GREY, LOSE.ATOP, LOSE.BESIDE FROM LOSE WHERE LOSE.ATOP = 'pink lime stealthily pending';
+<b>... took 0.008899229 seconds</b>
+
+$> SELECT LOSE.GREY, LOSE.BOLDLY, LOSE.ATOP, LOSE.BESIDE FROM LOSE WHERE LOSE.BOLDLY < 40 AND LOSE.BOLDLY >= 50 
+AND LOSE.ATOP = 'brown slyly upon';
+<b>... took 0.010964571 seconds</b>
+
+$> SELECT LOSE.BOLDLY + LOSE.BESIDE * LOSE.BOLDLY + LOSE.BESIDE + LOSE.BOLDLY AS OUTPUT_1, LOSE.GREY + 7.117299694632929 + LOSE.BESIDE + LOSE.BESIDE 
++ 1.028946836169421 + LOSE.GREY + 8.050529699179807 + LOSE.GREY AS OUTPUT_2, LOSE.BOLDLY + LOSE.BESIDE * LOSE.BOLDLY AS OUTPUT_3 FROM LOSE;
+<b>... took 0.038250794 seconds</b>
+
+</code></pre>
+                                                <pre><code>$> CREATE TABLE WHITE(THISTLE int, PALE int, CORNFLOWER string, NOD decimal);
+
+$> SELECT WHITE.CORNFLOWER, WHITE.THISTLE, WHITE.PALE, WHITE.NOD FROM WHITE WHERE WHITE.THISTLE >= 47 AND WHITE.NOD <= 5.060042952283277;
+<b>... took 0.021470763 seconds</b>
+
+$> SELECT WHITE.THISTLE, WHITE.NOD, WHITE.CORNFLOWER FROM WHITE;
+<b>... took 0.028728029 seconds</b>
+
+$> SELECT WHITE.THISTLE, WHITE.NOD, WHITE.PALE FROM WHITE WHERE WHITE.THISTLE > 44 AND WHITE.CORNFLOWER = 'affix doze finally accounts' AND WHITE.NOD < 4.838894193976446;
+<b>... took 0.008941208 seconds</b>
+
+$> SELECT WHITE.PALE, WHITE.THISTLE, WHITE.CORNFLOWER FROM WHITE WHERE WHITE.CORNFLOWER = 'navajo sly ironic' AND WHITE.THISTLE > 50;
+<b>... took 0.006027645 seconds</b>
+
+$> SELECT WHITE.PALE + WHITE.PALE * WHITE.THISTLE AS OUTPUT_1, WHITE.NOD + WHITE.PALE * WHITE.PALE AS OUTPUT_2 FROM WHITE;
+<b>.. took 0.017839759 seconds</b>
+
+$> SELECT WHITE.NOD, WHITE.THISTLE, WHITE.CORNFLOWER FROM WHITE WHERE WHITE.NOD < 4.21140636455908 AND WHITE.NOD <= 4.629423335111538 AND WHITE.THISTLE > 45;
+<b>... took 0.009306568 seconds</b>
+
+$> SELECT 6.022950182012349 + WHITE.THISTLE + 3.1132767269755766 + WHITE.THISTLE + WHITE.THISTLE + WHITE.THISTLE AS OUTPUT_1, WHITE.THISTLE + WHITE.NOD + 4.804549905764231 + 2.023663069290813 + WHITE.THISTLE + WHITE.NOD + WHITE.THISTLE AS OUTPUT_2 FROM WHITE;
+<b>... took 0.031829143 seconds</b>
+                                                </code></pre>
+                                                <li><b>NBA Benchmark Queries</b></li>
+                                                <pre><code>$> CREATE TABLE PLAYERS( ID string, FIRSTNAME string, LASTNAME string, FIRSTSEASON int, LASTSEASON int, WEIGHT int, BIRTHDATE date );
+
+<b>NBA-01</b>
+$> SELECT FIRSTNAME, LASTNAME, WEIGHT, BIRTHDATE FROM PLAYERS WHERE WEIGHT>200;
+<b>... took 0.457499482 seconds</b>
+
+<b>NBA-03</b>
+$> SELECT FIRSTNAME, LASTNAME, FIRSTSEASON, LASTSEASON FROM PLAYERS WHERE LASTSEASON-FIRSTSEASON>5;
+<b>... took 0.281330305 seconds</b>
+                                                </code></pre>
+                                                <pre><code>$> CREATE TABLE PLAYERS_SMALL( ID string, FIRSTNAME string, LASTNAME string, FIRSTSEASON int, LASTSEASON int, WEIGHT int, BIRTHDATE date );
+
+<b>NBA-06</b>
+$> SELECT P1.FIRSTNAME, P1.LASTNAME, P2.FIRSTNAME, P2.LASTNAME
+FROM PLAYERS_SMALL P1, PLAYERS_SMALL P2 
+WHERE (P1.FIRSTSEASON=P2.FIRSTSEASON) AND (P1.FIRSTNAME != P2.FIRSTNAME) AND (P1.LASTNAME != P2.LASTNAME);
+<b>... took 8.829009442 seconds</b>
+
+<b>NBA-07</b>
+$> SELECT P1.*, P2.* 
+FROM PLAYERS_SMALL P1, PLAYERS_SMALL P2 
+WHERE (P1.FIRSTSEASON<P2.FIRSTSEASON AND P1.LASTSEASON>P2.LASTSEASON);
+<b>... took 7.613429073 seconds</b>
+                                                </code></pre>
+                                                <li><b>TPC-H Benchmark Queries</b> (Source: <a href="http://www.tpc.org/tpc_documents_current_versions/pdf/tpc-h_v2.18.0.pdf">tpc.org)</a></li>
+                                                <p>The performance measures shown below are for the <b>1000MB (SF 1) TPC-H Dataset</b>.</p>
+                                                <pre><code><b>TABLE LINEITEM - 753.9MB</b>
+$> CREATE TABLE LINEITEM(ORDERKEY INT,PARTKEY INT,SUPPKEY INT,LINENUMBER INT,QUANTITY DECIMAL,
+EXTENDEDPRICE DECIMAL,DISCOUNT DECIMAL,TAX DECIMAL,RETURNFLAG CHAR(1),LINESTATUS CHAR(1),SHIPDATE DATE,
+COMMITDATE DATE,RECEIPTDATE DATE,SHIPINSTRUCT CHAR(25),SHIPMODE CHAR(10),COMMENT VARCHAR(44),PRIMARY KEY (ORDERKEY,LINENUMBER));
+
+<b>TABLE ORDERS - 170.5MB</b>
+$> CREATE TABLE ORDERS(ORDERKEY INT,CUSTKEY INT,ORDERSTATUS CHAR(1),TOTALPRICE DECIMAL,ORDERDATE DATE,ORDERPRIORITY CHAR(15),
+CLERK CHAR(15),SHIPPRIORITY INT,COMMENT VARCHAR(79),PRIMARY KEY (ORDERKEY));
+
+<b>TABLE CUSTOMER - 24.2MB</b>
+$> CREATE TABLE CUSTOMER(CUSTKEY INT,NAME VARCHAR(25),ADDRESS VARCHAR(40),NATIONKEY INT,PHONE CHAR(15),ACCTBAL DECIMAL,
+MKTSEGMENT CHAR(10),COMMENT VARCHAR(117),PRIMARY KEY (CUSTKEY));
+
+<b>TABLE SUPPLIER - 1.4MB</b>
+$> CREATE TABLE SUPPLIER(SUPPKEY INT,NAME CHAR(25),ADDRESS VARCHAR(40),NATIONKEY INT,PHONE CHAR(15),ACCTBAL DECIMAL,COMMENT VARCHAR(101),PRIMARY KEY (SUPPKEY));
+
+<b>TABLE NATION - 2KB</b>
+$> CREATE TABLE NATION(NATIONKEY INT,NAME CHAR(25),REGIONKEY INT,COMMENT VARCHAR(152),PRIMARY KEY (NATIONKEY));
+
+<b>TABLE REGION - 384B</b>
+$> CREATE TABLE REGION(REGIONKEY INT,NAME CHAR(25),COMMENT VARCHAR(152),PRIMARY KEY (REGIONKEY));
+
+</code></pre>
+
+<pre><code><b>TPC-H Query 1</b>
+$> select
+lineitem.returnflag,
+lineitem.linestatus,
+sum(lineitem.quantity) as sum_qty,
+sum(lineitem.extendedprice) as sum_base_price,
+sum(lineitem.extendedprice*(1-lineitem.discount)) as sum_disc_price,
+sum(lineitem.extendedprice*(1-lineitem.discount)*(1+lineitem.tax)) as sum_charge,
+avg(lineitem.quantity) as avg_qty,
+avg(lineitem.extendedprice) as avg_price,
+avg(lineitem.discount) as avg_disc,
+count(*) as count_order
+from
+lineitem
+where
+lineitem.shipdate <= DATE('1999-02-25')
+group by
+lineitem.returnflag,
+lineitem.linestatus
+order by
+lineitem.returnflag,
+lineitem.linestatus;
+<b>... took 32.48 seconds</b>
+</code></pre>
+<p><b>Note:</b> As 1998-12-01 is the highest possible ship date as defined in the database population 100% of the rows in the table will be scanned for the DATE in the above query. </p>
+
+<pre><code><b>TPC-H Query 3</b>
+$> select
+lineitem.orderkey,
+sum(lineitem.extendedprice * (1 - lineitem.discount)) as revenue,
+orders.orderdate,
+orders.shippriority
+from
+customer,
+orders,
+lineitem
+where
+customer.mktsegment = 'BUILDING'
+and customer.custkey = orders.custkey
+and lineitem.orderkey = orders.orderkey
+and orders.orderdate < DATE('1995-03-18')
+and lineitem.shipdate > DATE('1995-03-18')
+group by
+lineitem.orderkey,
+orders.orderdate,
+orders.shippriority
+order by
+revenue desc,
+orders.orderdate,
+lineitem.orderkey
+limit 10;
+<b>... took 8.88 seconds</b>
+</code></pre>
+
+<pre><code><b>TPC-H Query 5</b>
+$> select
+n_name,
+sum(lineitem.extendedprice * (1 - lineitem.discount)) as revenue
+from
+customer,
+orders,
+lineitem,
+supplier,
+nation,
+region
+where
+customer.custkey = orders.custkey
+and lineitem.orderkey = orders.orderkey
+and lineitem.suppkey = supplier.suppkey
+and customer.nationkey = supplier.nationkey
+and supplier.nationkey = nation.nationkey
+and nation.regionkey = region.regionkey
+and region.name = 'ASIA'
+and orders.orderdate >= '1994-01-01'
+and orders.orderdate < '1995-01-01'
+group by
+nation.name
+order by
+revenue desc;
+<b>... took 7.63 seconds</b>
+</code></pre>
+
+<pre><code><b>TPC-H Query 6</b>
+$> select
+sum(lineitem.extendedprice*lineitem.discount) as revenue
+from
+lineitem
+where
+lineitem.shipdate >= date('1995-01-01')
+and lineitem.shipdate < date ('1996-01-01')
+and lineitem.discount > 0.04 and lineitem.discount < 0.06 
+and lineitem.quantity < 25;
+<b>... took 6.53 seconds</b>
+</code></pre>
+
+<pre><code><b>TPC-H Query 12</b>
+$> select
+lineitem.shipmode,
+sum(case
+  when orders.orderpriority = '1-URGENT'
+    or orders.orderpriority = '2-HIGH'
+  then 1
+  else 0
+end) as high_line_count,
+sum(case
+  when orders.orderpriority <> '1-URGENT'
+    and orders.orderpriority <> '2-HIGH'
+  then 1
+  else 0
+end) as low_line_count
+from
+orders,
+lineitem
+where
+orders.orderkey = lineitem.orderkey
+and lineitem.shipmode in ('MAIL', 'SHIP')
+and lineitem.commitdate < lineitem.receiptdate
+and lineitem.shipdate < lineitem.commitdate
+and lineitem.receiptdate >= '1994-01-01'
+and lineitem.receiptdate < '1995-01-01'
+group by
+lineitem.shipmode
+order by
+lineitem.shipmode;
+<b>... took 6.73 seconds</b>
+
+</code></pre>
+</ul>
+<pre></pre>
+<b style="font-size:20px">* Query Engine supports <mark style="color:red;">Indexing</mark> for :</b>
+<div class="col-6 col-12-small">
+    <ul>
+        <li style="font-size: 18px">TPC-H query 1 on LINEITEM.SHIPDATE</li>
+        <li style="font-size: 18px">TPC-H query 3 on LINEITEM.SHIPDATE, ORDERS.ORDERDATE and CUSTOMER.MKTSEGMENT</li>
+        <li style="font-size: 18px">TPC-H query 5 on ORDERS.ORDERDATE</li>
+        <li style="font-size: 18px">TPC-H query 6 on LINEITEM.SHIPDATE</li>
+        <li style="font-size: 18px">TPC-H query 12 on LINEITEM.RECEIPTDATE</li>
+    </ul>
+</div>
+
+</div>
+<br/>
+<ul class="actions special">
+											
+        <li><a href="index.html#db"   class="button scrolly">Go Back</a></li>
+        <li><a href="https://github.com/anunayrao/Relational-Query-Engine"   class="button scrolly">VIEW CODE</a></li>
+</ul>
+
+
+                                        
+							</section>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<!--
+						<section>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="text" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="3"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+						</section>
+						-->
+						<section class="split contact">
+							<section class="alt">
+								<h3>Address</h3>
+								<p>102 Englewood Avenue<br />
+								Buffalo, NY 14214-1261</p>
+							</section>
+							<section>
+								<h3>Phone</h3>
+								<p><a href="#">(716) 536-0335</a></p>
+							</section>
+							<section>
+								<h3>Email</h3>
+								<p><a href="mailto:anunayra@buffalo.edu">anunayra@buffalo.edu</a></p>
+							</section>
+							<section>
+								<h3>Social</h3>
+								<ul class="icons alt">
+									<!--
+							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>-->
+							<li><a href="https://www.linkedin.com/in/anunayrao/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/anunayrao" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+								</ul>
+							</section>
+						</section>
+					</footer>
+
+				<!-- Copyright -->
+                <!--  
+                <div id="copyright">
+						<ul><li>&copy; Anunay Rao</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+                -->
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

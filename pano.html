@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Panorama | Anunay Rao</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Anunay Rao</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">Work</a></li>
+							<li><a href="generic.html">Generic Page</a></li>
+							<li><a href="generic2.html">About Me</a></li>
+							
+						</ul>
+						<ul class="icons">
+							<!--
+							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>-->
+							<li><a href="https://www.linkedin.com/in/anunayrao/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/anunayrao" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<h3>Panorama<br />
+									</h3>
+								</header>
+								
+								<!-- Text stuff -->
+							
+							<!--
+									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
+									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
+									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>.
+									Finally, this is a <a href="#">link</a>.</p>-->
+								
+									<h2>Introduction</h2>
+									<p>Warping two images using the Homography matrix formed by matching the keypoints between those two images. This will be implemented on the following two images:
+                                           <br/><br/> 
+                                         <img src="images/mountain.png" class="imagecen2" >
+                                    </p>
+									<hr />
+                                    <h2>Methodology and Result</h2>
+                                    <b>Extracting SIFT features and showing keypoints on both images:</b><br/><br/>
+                                    <p>
+                                            <img src="images/task1_sift1.jpg" class="imagecen80"  >
+                                           
+                                           <br/> <br/>
+                                          
+                                           <img src="images/task1_sift2.jpg" class="imagecen80"  >
+                                           <br/>
+                                           <br/>
+                                        
+                                    <b>Matching keypoints using k-nearest neighbour (k=2):</b>    
+                                    For a keypoint in the left image, finding the best 2 matches in the right image. Further, filtering out good matches which satisfy m.distance &lt 0.75 n.distance, where m is the first match and n is the second match.
+                                    <br/><br/>
+                                    <img src="images/task1_matches_knn.jpg" class="imagecen2"  >
+                                    <br/><br/>
+                                    <b>Computing Homography Matrix with RANSAC from the first image to the second image:</b>
+                                    <br/><br/>
+                                    Homography Matrix:
+                                    <pre><code>
+                            1.54217838    -0.295999582    -379.485248
+                            0.431696329    1.38882049     -180.928088
+                            0.0015461028  -0.000106844316  1.00000000
+                </code>    </pre>
+                                        <b>Showing 10 random matches using only inliers:</b>
+                                        <br/><br/>
+                                        <img src="images/task1_matches.jpg" class="imagecen2"  >
+                                        <br/><br/>
+                                        <b>Warping the first image to the second using Homography Matrix:</b>
+                                            <br/><br/>
+                                            <img src="images/task1_pano.jpg" class="imagecen2"  >
+                                            
+                                        </p>
+									
+                                    <br/>
+                                    <br/>
+									
+									
+									
+									
+									
+
+
+									
+									<ul class="actions special">
+											
+											<li><a href="index.html#edge"   class="button scrolly">Go Back</a></li>
+											<li><a href="index.html"   class="button scrolly">VIEW CODE</a></li>
+									</ul>
+
+									<hr />
+
+					
+					<!--<iframe src="/files/proj1.1.pdf" width="100%" height="1000px"></iframe>-->
+					</div>
+
+				<!-- Footer -->
+					
+				<footer id="footer">
+					<!--
+					<section>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="text" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="3"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+						</section> -->	
+						<section class="split contact">
+                                <section class="alt">
+                                    <h3>Address</h3>
+                                    <p>102 Englewood Avenue<br />
+                                    Buffalo, NY 14214-1261</p>
+                                </section>
+                                <section>
+                                    <h3>Phone</h3>
+                                    <p><a href="#">(716) 536-0335</a></p>
+                                </section>
+                                <section>
+                                    <h3>Email</h3>
+                                    <p><a href="mailto:anunayra@buffalo.edu">anunayra@buffalo.edu</a></p>
+                                </section>
+                                <section>
+                                    <h3>Social</h3>
+                                    <ul class="icons alt">
+                                        <!--
+                                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>-->
+                                <li><a href="https://www.linkedin.com/in/anunayrao/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                                <li><a href="https://github.com/anunayrao" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+                                    </ul>
+                                </section>
+                            </section>
+                        </footer>
+    
+                    <!-- Copyright -->
+                    <!--  
+                    <div id="copyright">
+                            <ul><li>&copy; Anunay Rao</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+                        </div>
+                    -->
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

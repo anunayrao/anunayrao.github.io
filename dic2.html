@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Text Processing using 
+				Hadoop MapReduce | Anunay Rao</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Anunay Rao</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">Work</a></li>
+							
+							<li><a href="generic2.html">About Me</a></li>
+							
+						</ul>
+						<ul class="icons">
+							<!--
+							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>-->
+							<li><a href="https://www.linkedin.com/in/anunayrao/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="https://github.com/anunayrao" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<h3>Text Processing using 
+											Hadoop MapReduce<br />
+									</h3>
+								</header>
+								
+								<!-- Text stuff -->
+								<section class="video">
+									<video width="640" height="480" controls>
+										<source src="dicvdo/Video.mp4" type="video/mp4">
+										
+									  Your browser does not support the video tag.
+									  </video>
+									</section>
+									<h2>Topic for Data Collection : SPORTS</h2>
+									<p>The data is collected for five subtopics of <strong>Sports </strong>namely, <strong>baseball, golf, football, tennis</strong> and <strong>basketball.</strong></p>
+									<!--
+									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
+									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
+									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>.
+									Finally, this is a <a href="#">link</a>.</p>-->
+								
+									<h2>Description and Methodology</h2>
+									<ol type="1">
+										<li>The first step we needed to do was to collect 20K tweets from twitter, and 500 articles from New York Times and Common Crawl for the year 2019.</li>
+											<ol type="a">
+												<li> For collecting data from twitter (TwitterFetchData.ipynb), we fetched the API keys from the twitter developer account, wrote the code in python such that it eliminates the duplicate tweets (Retweets) and collect tweets that are of this year only. We collected 4000 unique tweets from each sub topic.</li> 
+												<li>For collecting articles from New York Times (NYTFetchData.ipynb), we created an account in https://developer.nytimes.com and generated API for article search. Using the API we collected 100 articles on each subtopic.</li>
+												<li>For collecting articles from Common Crawl (CommonCrawl.ipynb) we did index search on Common Crawl Index of 2019 namely [2019-04, 2019-09 and 2019- 13] for the domains restricted through news API and other sources. We applied filter to the URL so that the URL must contain our subtopic keyword to have more relevant data. For each record returned, we could extract the data in two ways one is to get the offset from the record and get the data from AWS Public Dataset of Common Crawl and the other is to get the URL and then use request method to get the data. One problem with the former method is you might find lot of segments which do not return the data or they are not reachable, plus the process is bit more time consuming as compared to the latter.
+													</li>
+												</ol>			
+										<li>After collecting data to continue the process, we created the set up for Hadoop on the Docker by following the <a href="/files/ClouderaDockerHadoopMR.pdf">Cloudera Docker Hadoop Document</a> .</li>
+											
+										<li>For further steps, we designed and developed the code for Mapper (mapper.py) as well as Reducer(reducer.py). In the Mapper phase we removed all the stop words and did all the necessary processing of data using regex in order to get better results.</li>
+										<li> After running the Map Reduce Job we got the output. Then for the top 10 words from word count, we processed the word co-occurrence Mapper(mapper1.py) and Reducer(reducer.py).</li>
+										<li>We created an external script for converting output file to CSV (texttocsv.py) and then sorting the csv file (sort.py) for word count and word co-occurrence so that the top 10 can be used further for visualization.</li>
+										<li>For visualization of the top 10 words and pairs we needed to create word clouds for each type of data collected. So, we used Tableau, you can create an account on tableau for a trial period and can perform visualization using drag and drop. After creating the workbook of all 6 word clouds, we published our workbook on tableau public, which can also be done using creating an account at Tableau public. Navigating through the entire web page, all six word clouds can be seen by clicking on 6 tabs.</li>
+									</ol>
+									<hr />
+									<h2>Basic Process Flow</h2>
+									
+									<img src="images/bpflow.png" class="imagecen"  >
+									<hr />
+									<h2>Detailed Process Flow</h2>
+									
+									<img src="images/dtflow.png" class="imagecen"  >
+									<hr />
+									
+									<h2>Visualisation Result</h2>
+									<ul>
+									<li><strong>Word Cloud for Word Count Twitter Data:</strong></li>
+									<img src="images/tw1.png" class="image main"  >
+									<hr />
+									<li><strong>Word Cloud for Word Co-occurrence Twitter Data:</strong></li>
+									<img src="images/tw2.png" class="image main"  >
+									<hr />
+									<li><strong>Word Cloud for Word Count NYT Data:</strong></li>
+									<img src="images/nyt1.png" class="image main"  >
+									<hr />
+									<li><strong>Word Cloud for Word Co-occurrence NYT Data:</strong></li>
+									<img src="images/nyt2.png" class="image main"  >
+									<hr />
+									<li><strong>Word Cloud for Word Count Common Crawl Data:</strong></li>
+									<img src="images/cc1.png" class="image main"  >
+									<hr />
+									<li><strong>Word Cloud for Word Co-occurrence Common Crawl Data:</strong></li>
+									<img src="images/cc2.png" class="image main"  >
+									
+									</ul>
+									<ul class="actions special">
+											
+											<li><a href="index.html#dic1"   class="button scrolly">Go Back</a></li>
+											<li><a href="https://github.com/anunayrao/Text-Processing-using-Hadoop-MapReduce"   class="button scrolly">VIEW CODE</a></li>
+									</ul>
+
+									<hr />
+
+								
+					</div>
+
+				<!-- Footer -->
+					
+				<footer id="footer">
+					<!--
+					<section>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="text" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="3"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+						</section> -->	
+						<section class="split contact">
+								<section class="alt">
+									<h3>Address</h3>
+									<p>102 Englewood Avenue<br />
+									Buffalo, NY 14214-1261</p>
+								</section>
+								<section>
+									<h3>Phone</h3>
+									<p><a href="#">(716) 536-0335</a></p>
+								</section>
+								<section>
+									<h3>Email</h3>
+									<p><a href="mailto:anunayra@buffalo.edu">anunayra@buffalo.edu</a></p>
+								</section>
+								<section>
+									<h3>Social</h3>
+									<ul class="icons alt">
+										<!--
+								<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+								<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+								<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>-->
+								<li><a href="https://www.linkedin.com/in/anunayrao/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+								<li><a href="https://github.com/anunayrao" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+									</ul>
+								</section>
+							</section>
+						</footer>
+	
+					<!-- Copyright -->
+					<!--  
+					<div id="copyright">
+							<ul><li>&copy; Anunay Rao</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+						</div>
+					-->
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
